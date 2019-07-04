@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- sale.order -->
+        <record model="ir.ui.view" id="is_view_order_form">
+            <field name="name">is_view_order_form</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+
+                <notebook position="before">
+                    <group>
+                        <field name="is_intitule"/>
+                        <field name="is_introduction"/>
+                        <field name="is_delai_realisation"/>
+                    </group>
+                </notebook>
+                <field name="user_id" position="after">
+                    <field name="is_conseiller_scientifique_id"/>
+                </field>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="is_view_order_tree">
+            <field name="name">is_view_order_tree</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_tree"/>
+            <field name="arch" type="xml">
+                <field name="name" position="after">
+                    <field name="is_intitule"/>
+                </field>
+                <field name="user_id" position="after">
+                    <field name="is_conseiller_scientifique_id"/>
+                </field>
+             </field>
+        </record>
+        <record model="ir.ui.view" id="is_view_quotation_tree_with_onboarding">
+            <field name="name">is_view_quotation_tree_with_onboarding</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_quotation_tree_with_onboarding"/>
+            <field name="arch" type="xml">
+                <field name="name" position="after">
+                    <field name="is_intitule"/>
+                </field>
+                <field name="user_id" position="after">
+                    <field name="is_conseiller_scientifique_id"/>
+                </field>
+             </field>
+        </record>
+
+
+
+
+
+    </data>
+</odoo>
+
+
