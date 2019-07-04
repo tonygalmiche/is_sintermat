@@ -10,3 +10,5 @@ class SaleOrder(models.Model):
     is_intitule                   = fields.Char(u"Intitulé")
     is_introduction               = fields.Text(u"Texte d'introduction")
     is_delai_realisation          = fields.Text(u"Délai de réalisation")
+    is_condition_paiement         = fields.Text(u"Conditions de paiement particulières")
+

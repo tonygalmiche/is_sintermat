@@ -248,10 +248,13 @@
                 </div>
             </div>
 
-            <!--<p t-field="doc.note" />-->
             <p t-if="doc.payment_term_id.note">
-                <span t-field="doc.payment_term_id.note"/>
+                <b>Conditions de paiement : </b><span t-field="doc.payment_term_id.note"/>
             </p>
+            <p t-if="not doc.payment_term_id and doc.is_condition_paiement">
+                <b>Conditions de paiement : </b><span t-field="doc.is_condition_paiement"/>
+            </p>
+
             <p id="fiscal_position_remark" t-if="doc.fiscal_position_id and doc.fiscal_position_id.sudo().note">
                 <strong>Fiscal Position Remark:</strong>
                 <span t-field="doc.fiscal_position_id.sudo().note"/>
@@ -270,7 +273,7 @@
             </div>
 
 
-
+            <br />
             <table class="table table-sm">
                 <thead>
                     <tr>
