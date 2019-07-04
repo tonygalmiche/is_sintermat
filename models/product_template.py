@@ -31,5 +31,17 @@ class ProductProduct(models.Model):
 
 
 
+    def get_product_multiline_description_sale(self):
+        name = self.display_name
+        name = self.name
+        if self.description_sale:
+            name += '\n' + self.description_sale
+
+        #if self.is_dimensions:
+        #    name += '\n' + u'Dimensions : '+self.is_dimensions
+        #if self.is_matiere:
+        #    name += '\n' + u'Matière : '+self.is_matiere
+
+        return name
 
 
