@@ -21,9 +21,14 @@ InfoSaône - Module Odoo 12 pour Sintermat
         'views/res_company_views.xml',
         'views/sale_view.xml',
         'views/menu.xml',
+        'report/conditions_generales_de_vente_templates.xml',
         'report/report_invoice.xml',
         'report/sale_report_templates.xml',
         'report/report_templates.xml',
+
+
+
+
     ],
     'installable': True,
     'application': True,

@@ -12,11 +12,8 @@
         </xpath>
         <xpath expr="//div[hasclass('footer')]" position="replace">
             <div class="footer o_standard_footer">
+                <div style="height:5mm"/>
                 <div class="text-center" style="border-top: 1px solid black;font-size:10pt">
-
-
-
-
                     <t t-if="company.name"><span t-field="company.name"/> - </t>
                     <t t-if="company.company_registry"><span t-field="company.company_registry"/> - </t>
                     <t t-if="company.website"><span t-field="company.website"/></t><br />
