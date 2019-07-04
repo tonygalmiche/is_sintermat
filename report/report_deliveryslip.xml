@@ -118,6 +118,8 @@
                             <th name="lot_serial" t-if="has_serial_number" groups="stock.group_lot_on_delivery_slip">
                                 Lot/Serial Number
                             </th>
+                            <th><strong>Dimensions (mm)</strong></th>
+                            <th><strong>Matière</strong></th>
                             <th class="text-center"><strong>Quantité</strong></th>
                         </tr>
                     </thead>
@@ -132,6 +134,16 @@
                                     <span t-field="move_line.product_id.sudo().description_pickingin"/>
                                 </p>
                             </td>
+
+
+                            <td>
+                                <span t-field="move_line.product_id.is_dimensions"/>
+                            </td>
+                            <td>
+                                <span t-field="move_line.product_id.is_matiere"/>
+                            </td>
+
+
                             <td t-if="has_serial_number and move_line.lot_name" groups="stock.group_lot_on_delivery_slip">
                                 <span t-field="move_line.lot_name"/>
                             </td>
