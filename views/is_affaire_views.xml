@@ -2,6 +2,7 @@
 <odoo>
 
     <!-- is.affaire -->
+    <!--
     <record id="is_affaire_seq" model="ir.sequence">
         <field name="name">Code Affaire</field>
         <field name="code">is.affaire</field>
@@ -53,7 +54,7 @@
         <field name="limit">200</field>
         <field name="view_mode">tree,form</field>
     </record>
-
+    -->
 
     <!-- is.phase -->
     <record id="is_phase_form" model="ir.ui.view">

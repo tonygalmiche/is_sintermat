@@ -13,21 +13,21 @@ class IsPhase(models.Model):
     description = fields.Text("Description")
 
 
-class IsAffaire(models.Model):
-    _name = 'is.affaire'
-    _description = u"Affaire"
-    _order='name'
+#class IsAffaire(models.Model):
+#    _name = 'is.affaire'
+#    _description = u"Affaire"
+#    _order='name'
 
-    name        = fields.Char("Affaire", readonly=True)
-    description = fields.Text("Description")
-    phase_id    = fields.Many2one('is.phase', 'Phase', required=True)
+#    name        = fields.Char("Affaire", readonly=True)
+#    description = fields.Text("Description")
+#    phase_id    = fields.Many2one('is.phase', 'Phase', required=True)
 
 
-    @api.model
-    def create(self, vals):
-        vals['name'] = self.env['ir.sequence'].next_by_code('is.affaire')
-        res = super(IsAffaire, self).create(vals)
-        return res
+#    @api.model
+#    def create(self, vals):
+#        vals['name'] = self.env['ir.sequence'].next_by_code('is.affaire')
+#        res = super(IsAffaire, self).create(vals)
+#        return res
 
 
 

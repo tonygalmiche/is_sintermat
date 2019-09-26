@@ -336,16 +336,27 @@
                 <table class="table table-sm">
                     <thead>
                         <tr>
-                            <th class="text-center">Bon pour accord</th>
-                            <th class="text-center">Cachet et Signature</th>
+                            <th class="text-center">
+                                <t t-if="doc.partner_id.lang == 'fr_FR'">Bon pour accord</t>
+                                <t t-if="doc.partner_id.lang != 'fr_FR'">Bon pour accord / Good for agreement</t>
+                            </th>
+                            <th class="text-center">
+                                <t t-if="doc.partner_id.lang == 'fr_FR'">Cachet et Signature</t>
+                                <t t-if="doc.partner_id.lang != 'fr_FR'">Cachet et Signature / Stamp and signature</t>
+                            </th>
                         </tr>
                     </thead>
                     <tbody class="invoice_tbody">
                         <tr>
                             <td>
-                                Date : <br /><br />
-                                Nom,Prénom : <br /><br />
-                                Fonction : <br /><br />
+                                Date :
+                                <br /><br />
+                                <t t-if="doc.partner_id.lang == 'fr_FR'">Nom,Prénom :</t>
+                                <t t-if="doc.partner_id.lang != 'fr_FR'">Nom,Prénom / Name,First Name : </t>
+                                <br /><br />
+                                <t t-if="doc.partner_id.lang == 'fr_FR'">Fonction :</t>
+                                <t t-if="doc.partner_id.lang != 'fr_FR'">Fonction / Function : </t>
+                                <br /><br />
                             </td>
                             <td></td>
                         </tr>

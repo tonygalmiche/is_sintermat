@@ -2,22 +2,15 @@
 <odoo>
     <data>
         <menuitem   
-            name="Affaires"  
-            id="is_affaire_main_menu"
+            name="Phases"  
+            id="is_phase_main_menu"
             parent="sale.sale_menu_root"
             sequence="90"
         />
         <menuitem
-            name="Affaires"
-            id="is_affaire_menu"
-            parent="is_affaire_main_menu"
-            sequence="10"
-            action="is_affaire_action"
-        />
-        <menuitem
             name="Phases"
             id="is_phase_menu"
-            parent="is_affaire_main_menu"
+            parent="is_phase_main_menu"
             sequence="20"
             action="is_phase_action"
         />
