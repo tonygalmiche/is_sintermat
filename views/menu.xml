@@ -1,35 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
     <data>
-
-
-        <!--
-        <menuitem
-            name="Methalac"
-            id="is_methalac_main_menu"
-            sequence="90"
-        />
         <menuitem   
-            name="Tables"  
-            id="is_tables_menu"
-            parent="is_methalac_main_menu"
+            name="Affaires"  
+            id="is_affaire_main_menu"
+            parent="sale.sale_menu_root"
             sequence="90"
         />
         <menuitem
-            id="is_type_production_menu"
-            name="Type de production"
-            parent="is_tables_menu"
+            name="Affaires"
+            id="is_affaire_menu"
+            parent="is_affaire_main_menu"
             sequence="10"
-            action="is_type_production_action"
+            action="is_affaire_action"
         />
         <menuitem
-            id="is_langue_menu"
-            name="Langue"
-            parent="is_tables_menu"
+            name="Phases"
+            id="is_phase_menu"
+            parent="is_affaire_main_menu"
             sequence="20"
-            action="is_langue_action"
+            action="is_phase_action"
         />
-        -->
 
     </data>
 </odoo>
