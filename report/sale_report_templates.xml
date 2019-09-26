@@ -89,14 +89,17 @@
             <table class="table table-sm">
                 <thead>
                     <tr>
-                        <th class="text-center">Validité de l'offre</th>
+                        <t t-if="doc.state in ['draft','sent']">    <th class="text-center">Validité de l'offre</th></t>
+                        <t t-if="doc.state not in ['draft','sent']"><th class="text-center">Date d'accusé de réception</th></t>
+
                         <th t-if="doc.user_id"                       class="text-center">Contact technique et commercial</th>
                         <th t-if="doc.is_conseiller_scientifique_id" class="text-center">Conseiller Scientifique</th>
                     </tr>
                 </thead>
                 <tbody class="invoice_tbody">
                     <tr>
-                        <td><p class="m-0 text-center" t-field="doc.validity_date"/></td>
+                        <t t-if="doc.state in ['draft','sent']">    <td><p class="m-0 text-center" t-field="doc.validity_date"/></td></t>
+                        <t t-if="doc.state not in ['draft','sent']"><td><p class="m-0 text-center" t-field="doc.is_confirmation_date"/></td></t>
                         <td t-if="doc.user_id">
                             <div t-field="doc.user_id.name"/>
                             <div t-field="doc.user_id.mobile"/>
@@ -275,33 +278,37 @@
             </div>
 
 
-            <br />
-            <table class="table table-sm">
-                <thead>
-                    <tr>
-                        <th class="text-center">Bon pour accord</th>
-                        <th class="text-center">Cachet et Signature</th>
-                    </tr>
-                </thead>
-                <tbody class="invoice_tbody">
-                    <tr>
-                        <td>
-                            Date : <br /><br />
-                            Nom,Prénom : <br /><br />
-                            Fonction : <br /><br />
-                        </td>
-                        <td></td>
-                    </tr>
-                </tbody>
-            </table>
 
+            <t t-if="doc.state in ['draft','sent']">
+                <br />
+                <table class="table table-sm">
+                    <thead>
+                        <tr>
+                            <th class="text-center">Bon pour accord</th>
+                            <th class="text-center">Cachet et Signature</th>
+                        </tr>
+                    </thead>
+                    <tbody class="invoice_tbody">
+                        <tr>
+                            <td>
+                                Date : <br /><br />
+                                Nom,Prénom : <br /><br />
+                                Fonction : <br /><br />
+                            </td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </t>
 
 
 
             <div class="oe_structure"/>
 
 
-            <t t-call="is_sintermat.conditions_generales_de_vente" />
+            <t t-if="doc.state in ['draft','sent']">
+                <t t-call="is_sintermat.conditions_generales_de_vente" />
+            </t>
 
         </div>
 
