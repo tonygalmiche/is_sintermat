@@ -195,7 +195,7 @@
                                 <t t-if="current_section and (line_last or o.invoice_line_ids[line_index+1].display_type == 'line_section')">
                                     <tr class="is-subtotal text-right">
                                         <td colspan="99">
-                                            <strong class="mr16">Subtotal</strong>
+                                            <strong class="mr16">Sous-total</strong>
                                             <span
                                                 t-esc="current_subtotal"
                                                 t-options='{"widget": "monetary", "display_currency": o.currency_id}'
@@ -238,12 +238,15 @@
                                             </t>
                                         </tr>
                                     </t>
-                                    <tr class="border-black o_total">
-                                        <td><strong>Total TTC</strong></td>
-                                        <td class="text-right">
-                                            <span t-field="o.amount_total"/>
-                                        </td>
-                                    </tr>
+
+                                    <t t-if="o.amount_untaxed!=o.amount_total">
+                                        <tr class="border-black o_total">
+                                            <td><strong>Total TTC</strong></td>
+                                            <td class="text-right">
+                                                <span t-field="o.amount_total"/>
+                                            </td>
+                                        </tr>
+                                    </t>
                                 </table>
                             </div>
                         </div>

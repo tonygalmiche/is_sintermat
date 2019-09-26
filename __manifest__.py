@@ -15,6 +15,8 @@ InfoSaône - Module Odoo 12 pour Sintermat
         'document',
         'product',
         'sale',
+        'purchase',
+        'purchase_stock',
     ],
     'data' : [
         'security/ir.model.access.csv',
@@ -26,6 +28,7 @@ InfoSaône - Module Odoo 12 pour Sintermat
         'report/conditions_generales_de_vente_templates.xml',
         'report/report_invoice.xml',
         'report/sale_report_templates.xml',
+        'report/purchase_order_templates.xml',
         'report/report_deliveryslip.xml',
         'report/report_templates.xml',
     ],
