@@ -158,27 +158,46 @@
                     <table class="table table-sm o_main_table" name="invoice_line_table">
                         <thead>
                             <tr>
-
                                 <t t-set="colspan" t-value="6"/>
                                 <th class="text-center">
                                     <t t-if="o.partner_id.lang == 'fr_FR'">Article</t>
                                     <t t-if="o.partner_id.lang != 'fr_FR'">Product</t>
                                 </th>
                                 <th class="text-center"><span>Description</span></th>
-                                <th class="text-left">Dimensions (mm)</th>
-                                <th class="text-left">Matière</th>
+                                <th class="text-left">
+                                    <t t-if="o.partner_id.lang == 'fr_FR'">Dimensions (mm)</t>
+                                    <t t-if="o.partner_id.lang != 'fr_FR'">Size (mm)</t>
+                                </th>
+                                <th class="text-left">
+                                    <t t-if="o.partner_id.lang == 'fr_FR'">Matière</t>
+                                    <t t-if="o.partner_id.lang != 'fr_FR'">Material</t>
+                                </th>
                                 <th class="d-none text-center"><span>Document</span></th>
-                                <th class="text-center"><span>Qté</span></th>
-                                <th t-attf-class="text-center {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}"><span>P.U. HT</span></th>
+                                <th class="text-center">
+                                    <t t-if="o.partner_id.lang == 'fr_FR'">Qté</t>
+                                    <t t-if="o.partner_id.lang != 'fr_FR'">Qty</t>
+                                </th>
+                                <th t-attf-class="text-center {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}">
+                                    <t t-if="o.partner_id.lang == 'fr_FR'">P.U. HT</t>
+                                    <t t-if="o.partner_id.lang != 'fr_FR'">Price (excl tax)</t>
+                                </th>
                                 <th t-if="display_discount" t-attf-class="text-center {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}">
                                     <span>Disc.(%)</span>
-
                                     <t t-set="colspan" t-value="colspan+1"/>
                                 </th>
-                                <th t-attf-class="text-center {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}"><span>TVA</span></th>
+                                <th t-attf-class="text-center {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}">
+                                    <t t-if="o.partner_id.lang == 'fr_FR'">TVA</t>
+                                    <t t-if="o.partner_id.lang != 'fr_FR'">VAT</t>
+                                </th>
                                 <th class="text-center">
-                                    <span groups="account.group_show_line_subtotals_tax_excluded">Montant HT</span>
-                                    <span groups="account.group_show_line_subtotals_tax_included">Montant TTC</span>
+                                    <span groups="account.group_show_line_subtotals_tax_excluded">
+                                        <t t-if="o.partner_id.lang == 'fr_FR'">Montant HT</t>
+                                        <t t-if="o.partner_id.lang != 'fr_FR'">Amount (excl tax)</t>
+                                    </span>
+                                    <span groups="account.group_show_line_subtotals_tax_included">
+                                        <t t-if="o.partner_id.lang == 'fr_FR'">Montant TTC</t>
+                                        <t t-if="o.partner_id.lang != 'fr_FR'">Amount</t>
+                                    </span>
                                 </th>
                             </tr>
                         </thead>
@@ -236,7 +255,10 @@
                                 <t t-if="current_section and (line_last or o.invoice_line_ids[line_index+1].display_type == 'line_section')">
                                     <tr class="is-subtotal text-right">
                                         <td colspan="99">
-                                            <strong class="mr16">Sous-total</strong>
+                                            <strong class="mr16">
+                                                <t t-if="o.partner_id.lang == 'fr_FR'">Sous-total</t>
+                                                <t t-if="o.partner_id.lang != 'fr_FR'">Sub Total</t>
+                                            </strong>
                                             <span
                                                 t-esc="current_subtotal"
                                                 t-options='{"widget": "monetary", "display_currency": o.currency_id}'
@@ -253,7 +275,12 @@
                             <div t-attf-class="#{'col-4' if report_type != 'html' else 'col-sm-7 col-md-5'} ml-auto">
                                 <table class="table table-sm">
                                     <tr class="border-black o_subtotal" style="">
-                                        <td><strong>Total HT</strong></td>
+                                        <td>
+                                            <strong>
+                                                <t t-if="o.partner_id.lang == 'fr_FR'">Total HT</t>
+                                                <t t-if="o.partner_id.lang != 'fr_FR'">Total (excl tax)</t>
+                                            </strong>
+                                        </td>
                                         <td class="text-right">
                                             <span t-field="o.amount_untaxed"/>
                                         </td>
