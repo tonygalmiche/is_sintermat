@@ -12,7 +12,9 @@
                     }
                 </style>
                 <div class="destinataire">
-                    A l'attention de <span t-field="o.partner_id.title"/> <span t-field="o.partner_id.name"/>
+                    <t t-if="o.partner_id.lang == 'fr_FR'">A l'attention de </t>
+                    <t t-if="o.partner_id.lang != 'fr_FR'">To </t>
+                    <span t-field="o.partner_id.title"/> <span t-field="o.partner_id.name"/>
                     <div t-field="o.partner_id.parent_id.name"/>
                     <div t-field="o.partner_id.street"/>
                     <div t-field="o.partner_id.street2"/>
@@ -70,24 +72,57 @@
                     }
                 </style>
                 <div class="page">
+
+
+
+    <!--
+    <span t-if="o.partner_id.lang == 'fr_FR'">FACTURE N° : </span>
+    <span t-if="o.partner_id.lang != 'fr_FR'">INVOICE : </span>
+    -->
+
                     <div style="height:5mm"/>
                     <h2>
-                        <span t-if="o.type == 'out_invoice' and o.state in ('open', 'in_payment', 'paid')">Facture n°</span>
-                        <span t-if="o.type == 'out_invoice' and o.state == 'draft'">Facture brouillon</span>
-                        <span t-if="o.type == 'out_invoice' and o.state == 'cancel'">Facture annulée</span>
-                        <span t-if="o.type == 'out_refund'">Avoir n°</span>
-                        <span t-if="o.type == 'in_refund'">Vendor Credit Note</span>
-                        <span t-if="o.type == 'in_invoice'">Vendor Bill</span>
+
+                        <t t-if="o.partner_id.lang == 'fr_FR'">
+                            <span t-if="o.type == 'out_invoice' and o.state in ('open', 'in_payment', 'paid')">Facture n°</span>
+                            <span t-if="o.type == 'out_invoice' and o.state == 'draft'">Facture brouillon</span>
+                            <span t-if="o.type == 'out_invoice' and o.state == 'cancel'">Facture annulée</span>
+                            <span t-if="o.type == 'out_refund'">Avoir n°</span>
+                            <span t-if="o.type == 'in_refund'">Avoir n°</span>
+                            <span t-if="o.type == 'in_invoice'">Facture n°</span>
+                        </t>
+
+
+                        <t t-if="o.partner_id.lang != 'fr_FR'">
+                            <span t-if="o.type == 'out_invoice' and o.state in ('open', 'in_payment', 'paid')">Invoice n°</span>
+                            <span t-if="o.type == 'out_invoice' and o.state == 'draft'">draft Invoice n°</span>
+                            <span t-if="o.type == 'out_invoice' and o.state == 'cancel'">cancel Invoice n°</span>
+                            <span t-if="o.type == 'out_refund'">Refund n°</span>
+                            <span t-if="o.type == 'in_refund'">Refund n°</span>
+                            <span t-if="o.type == 'in_invoice'">Invoice n°</span>
+                        </t>
+
+
                         <span t-field="o.number"/>
                     </h2>
                     <table class="table table-sm">
                         <thead>
-                            <tr>
-                                <th class="text-center">Date de la Facture</th>
-                                <th class="text-center">Date d'échéance</th>
-                                <th class="text-center">N°Cde</th>
-                                <th class="text-center">N°Facture</th>
-                            </tr>
+                            <t t-if="o.partner_id.lang == 'fr_FR'">
+                                <tr>
+                                    <th class="text-center">Date de la Facture</th>
+                                    <th class="text-center">Date d'échéance</th>
+                                    <th class="text-center">N°Cde</th>
+                                    <th class="text-center">N°Facture</th>
+                                </tr>
+                            </t>
+                            <t t-if="o.partner_id.lang != 'fr_FR'">
+                                <tr>
+                                    <th class="text-center">Invoice Date</th>
+                                    <th class="text-center">Due Date</th>
+                                    <th class="text-center">Order</th>
+                                    <th class="text-center">Invoice</th>
+                                </tr>
+                            </t>
                         </thead>
                         <tbody class="invoice_tbody">
                             <tr>
@@ -125,6 +160,10 @@
                             <tr>
 
                                 <t t-set="colspan" t-value="6"/>
+                                <th class="text-center">
+                                    <t t-if="o.partner_id.lang == 'fr_FR'">Article</t>
+                                    <t t-if="o.partner_id.lang != 'fr_FR'">Product</t>
+                                </th>
                                 <th class="text-center"><span>Description</span></th>
                                 <th class="text-left">Dimensions (mm)</th>
                                 <th class="text-left">Matière</th>
@@ -154,6 +193,8 @@
                                 <tr t-att-class="'bg-200 font-weight-bold o_line_section' if line.display_type == 'line_section' else 'font-italic o_line_note' if line.display_type == 'line_note' else ''">
                                     <t t-if="not line.display_type" name="account_invoice_line_accountable">
 
+
+                                        <td><span class="description" t-field="line.product_id"/></td>
                                         <td name="account_invoice_line_name"><span class="description" t-field="line.name"/></td>
 
                                         <td><span t-field="line.product_id.is_dimensions"/></td>

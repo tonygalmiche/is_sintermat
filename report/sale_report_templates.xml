@@ -78,7 +78,7 @@
 
             <h2>
                 <t t-if="not (env.context.get('proforma', False) or is_pro_forma)">
-                    <span t-if="doc.state not in ['draft','sent']">Commande n°</span>
+                    <span t-if="doc.state not in ['draft','sent']">AR de commande n°</span>
                     <span t-if="doc.state in ['draft','sent']">Devis n°</span>
                 </t>
                 <span t-field="doc.name"/> du <span t-esc="doc.date_order.strftime('%d/%m/%Y')"/>
@@ -123,6 +123,7 @@
                 <thead>
                     <tr>
                         <t t-set="colspan" t-value="5"/>
+                        <th class="text-left">Article</th>
                         <th class="text-left">Description</th>
                         <th class="text-left">Dimensions (mm)</th>
                         <th class="text-left">Matière</th>
@@ -150,6 +151,7 @@
 
                         <tr t-att-class="'bg-200 font-weight-bold o_line_section' if line.display_type == 'line_section' else 'font-italic o_line_note' if line.display_type == 'line_note' else ''">
                             <t t-if="not line.display_type">
+                                <td><span t-field="line.product_id"/></td>
                                 <td><span t-field="line.name"/></td>
                                 <td>
                                     <span t-field="line.product_id.is_dimensions"/>
