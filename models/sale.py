@@ -12,7 +12,27 @@ class SaleOrder(models.Model):
         for obj in self:
             obj.is_confirmation_date = str(obj.confirmation_date)
 
+
+    @api.depends('is_affaire_id','is_affaire_id.phase_id','is_affaire_id.phase_id.probabilite')
+    def _compute_is_phase_id(self):
+        for obj in self:
+            obj.is_phase_id    = obj.is_affaire_id.phase_id.id
+            obj.is_probabilite = obj.is_affaire_id.phase_id.probabilite
+
+
+
+    @api.depends('amount_untaxed','is_affaire_id','is_affaire_id.phase_id','is_affaire_id.phase_id.probabilite')
+    def _compute_is_ca_pondere(self):
+        for obj in self:
+            obj.is_ca_pondere = obj.amount_untaxed*obj.is_affaire_id.phase_id.probabilite/100
+
+
     is_confirmation_date          = fields.Date(u"Date de confirmation", compute='_compute_is_confirmation_date', readonly=True, store=False)
+    is_affaire_id                 = fields.Many2one('is.affaire', 'Affaire')
+    is_date_decisionnelle         = fields.Date(u"Date décisionnelle")
+    is_phase_id                   = fields.Many2one('is.phase', 'Phase', compute='_compute_is_phase_id', readonly=True, store=True)
+    is_probabilite                = fields.Integer(u"Probabilité (%)"  , compute='_compute_is_phase_id', readonly=True, store=True)
+    is_ca_pondere                 = fields.Float(u"CA Pondéré HT"  , compute='_compute_is_ca_pondere', readonly=True, store=True)
     is_conseiller_scientifique_id = fields.Many2one('res.partner', u"Conseillé scientifique")
     is_intitule                   = fields.Char(u"Intitulé")
     is_introduction               = fields.Text(u"Texte d'introduction")

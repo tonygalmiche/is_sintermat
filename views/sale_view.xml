@@ -13,6 +13,11 @@
                 </field>
                 <notebook position="before">
                     <group>
+                        <field name="is_affaire_id"/>
+                        <field name="is_date_decisionnelle"/>
+                        <field name="is_phase_id"/>
+                        <field name="is_probabilite"/>
+                        <field name="is_ca_pondere"/>
                         <field name="is_intitule"/>
                         <field name="is_introduction"/>
                         <field name="is_delai_realisation"/>
@@ -29,6 +34,11 @@
             <field name="inherit_id" ref="sale.view_order_tree"/>
             <field name="arch" type="xml">
                 <field name="name" position="after">
+                    <field name="is_affaire_id"/>
+                    <field name="is_date_decisionnelle"/>
+                    <field name="is_phase_id"/>
+                    <field name="is_probabilite"/>
+                    <field name="is_ca_pondere"/>
                     <field name="is_intitule"/>
                 </field>
                 <field name="user_id" position="after">
@@ -42,6 +52,11 @@
             <field name="inherit_id" ref="sale.view_quotation_tree_with_onboarding"/>
             <field name="arch" type="xml">
                 <field name="name" position="after">
+                    <field name="is_affaire_id"/>
+                    <field name="is_date_decisionnelle"/>
+                    <field name="is_phase_id"/>
+                    <field name="is_probabilite"/>
+                    <field name="is_ca_pondere"/>
                     <field name="is_intitule"/>
                 </field>
                 <field name="user_id" position="after">
@@ -50,8 +65,18 @@
              </field>
         </record>
 
-
-
+        <record id="is_view_sales_order_filter" model="ir.ui.view">
+            <field name="name">is_view_sales_order_filter</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_sales_order_filter"/>
+            <field name="arch" type="xml">
+                <field name="name" position="after">
+                    <field name="is_affaire_id"/>
+                    <field name="is_phase_id"/>
+                    <field name="is_intitule"/>
+                </field>
+            </field>
+        </record>
 
 
     </data>
