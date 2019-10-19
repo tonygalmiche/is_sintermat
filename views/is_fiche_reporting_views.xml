@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- is.fiche.reporting -->
+    <record id="is_fiche_reporting_seq" model="ir.sequence">
+        <field name="name">Fiche reporting</field>
+        <field name="code">is.fiche.reporting</field>
+        <field name="prefix"></field>
+        <field name="padding">4</field>
+        <field eval="False" name="company_id"/>
+    </record>
+    <record id="is_fiche_reporting_form" model="ir.ui.view">
+        <field name="name">is.fiche.reporting.form</field>
+        <field name="model">is.fiche.reporting</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="actualiser"   type="object" string="Actualiser" class="oe_highlight"/>
+                    <button name="envoyer_mail" type="object" string="Envoyer le mail"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="realise"/>
+                        <field name="date_debut"/>
+                        <field name="date_fin"/>
+                        <field name="objectif_debut"/>
+                        <field name="objectif_fin"/>
+                        <field name="photo_rh"  widget='image' class="oe_left oe_avatar"/>
+                        <field name="nouveaux_arrivants"/>
+                        <field name="vie_sintermat_gauche"/>
+                        <field name="vie_sintermat_droite"/>
+                        <field name="destinataire_mail_ids" widget="many2many_tags"/>
+                    </group>
+                    <group>
+                        <field name="donnees_graphique_ids" nolabel="1">
+                            <tree editable="bottom" >
+                                <field name="mois" />
+                                <field name="prevision" sum="Total"/>
+                                <field name="realise"   sum="Total"/>
+                            </tree>
+                        </field>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="is_fiche_reporting_tree" model="ir.ui.view">
+        <field name="name">is.fiche.reporting.tree</field>
+        <field name="model">is.fiche.reporting</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="date_debut"/>
+                <field name="date_fin"/>
+            </tree>
+        </field>
+    </record>
+    <record id="is_fiche_reporting_search" model="ir.ui.view">
+        <field name="name">is.fiche.reporting.search</field>
+        <field name="model">is.fiche.reporting</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+           </search>
+        </field>
+    </record>
+    <record  id="is_fiche_reporting_action" model="ir.actions.act_window">
+        <field name="name">Fiche reporting</field>
+        <field name="res_model">is.fiche.reporting</field>
+        <field name="view_type">form</field>
+        <field name="limit">200</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <!-- Envoi de la fiche de reporting chaque semaine -->
+    <record id="is_fiche_reporting_cron" model="ir.cron">
+        <field name="name">Envoi de la fiche de reporting par mail</field>
+        <field name="model_id" ref="model_is_fiche_reporting"/>
+        <field name="state">code</field>
+        <field name="code">model.envoyer_mail_cron()</field>
+        <field name='interval_number'>1</field>
+        <field name='interval_type'>weeks</field>
+        <field name="numbercall">-1</field>
+    </record>
+
+
+
+</odoo>

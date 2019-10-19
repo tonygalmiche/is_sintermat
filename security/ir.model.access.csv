@@ -1,4 +1,6 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_is_phase,access_is_phase,model_is_phase,base.group_user,1,1,1,1
 access_is_affaire,access_is_affaire,model_is_affaire,base.group_user,1,1,1,1
+access_is_fiche_reporting,access_is_fiche_reporting,model_is_fiche_reporting,sales_team.group_sale_manager,1,1,1,1
+access_is_fiche_reporting_graphique,access_is_fiche_reporting_graphique,model_is_fiche_reporting_graphique,sales_team.group_sale_manager,1,1,1,1
 

@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+
+
+
+    <template id="is_fiche_reporting_external_layout">
+
+        <t t-set="company" t-value="res_company"/>
+
+        <div class="header">
+
+                <table style="width:100%">
+                    <tr>
+                        <td style="width:40mm"><img t-att-src="'/is_sintermat/static/src/img/fiche-reporting-logo.png'" style="max-height: 30mm;" alt="Logo"/></td>
+                        <td style="vertical-align:bottom"><h1>Fiche reporting Comité stratégique du <span t-field="o.date_debut"/></h1></td>
+                    </tr>
+                </table>
+
+        </div>
+
+        <div class="article o_report_layout_standard"  t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
+            <t t-call="web.address_layout"/>
+            <t t-raw="0"/>
+        </div>
+
+        <div class="footer o_standard_footer">
+            <div class="text-center" style="border-top: 1px solid black;">
+                Confidentiel - Page: <span class="page"/> / <span class="topage"/>
+            </div>
+        </div>
+    </template>
+
+
+
+    <template id="is_fiche_reporting_report_document">
+        <t t-call="is_sintermat.is_fiche_reporting_external_layout">
+            <t t-set="o" t-value="o.with_context(lang=lang)" />
+            <div class="page">
+                <style>
+                    .th1{
+                        padding:2pt;
+                        font-size:11pt;
+                        border:1px solid black;
+                    }
+
+                    .td1{
+                        padding:1pt;
+                        padding-left:3pt;
+                        padding-right:3pt;
+                        font-size:11pt;
+                        border:1px solid black;
+                        vertical-align:top;
+                    }
+                    h2{
+                        background-color : #6CC5D7;
+                        font-size:13pt;
+                        text-align:center;
+                        padding:2pt;
+                        font-weight:bold;
+                    }
+
+                </style>
+                <h2>Finance et Commerce</h2>
+                <table style="border:1px solid black; width:100%">
+                    <thead>
+                        <tr>
+                            <th class="th1 text-center">Client</th>
+                            <th class="th1 text-center">Commande</th>
+                            <th class="th1 text-center">Phase</th>
+                            <th class="th1 text-center">%</th>
+                            <th class="th1 text-center">CA</th>
+                            <th class="th1 text-center">CA pondéré</th>
+                            <th class="th1 text-center">Date décisionnelle</th>
+                            <th class="th1 text-center">Date confirmation</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="o.get_commandes()" t-as="c">
+                            <tr>
+                                <td class="td1 text-left"><span t-field="c.partner_id.name"/></td>
+                                <td class="td1 text-center"><span t-field="c.name"/></td>
+                                <td class="td1 text-center"><span t-field="c.is_phase_id.name"/></td>
+                                <td class="td1 text-center"><span t-field="c.is_phase_id.probabilite"/></td>
+                                <td class="td1 text-right"><span t-esc='"{:,.2f}".format(c.amount_untaxed).replace(","," ").replace(".",",")'/> €</td>
+                                <td class="td1 text-right"><span t-esc='"{:,.2f}".format(c.is_ca_pondere).replace(","," ").replace(".",",")'/> €</td>
+                                <td class="td1 text-center"><span t-field="c.is_date_decisionnelle" t-field-options='{"format": "dd/MM/yyyy"}'/></td>
+                                <td class="td1 text-center"><t t-if="c.confirmation_date"><t t-esc="c.confirmation_date.strftime('%d/%m/%Y') "/></t></td>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+                <br />
+                <table style="border:1px solid black; width:100%">
+                    <tr>
+                        <td class="td1 text-center">
+                            <img t-if="o.graphique"
+                                t-att-src="image_data_uri(o.graphique)"
+                                class="imgclass"
+                                style="max-height:100mm"
+                            />
+                        </td>
+                        <td class="td1 text-left">
+                            <div t-field="o.realise"/>
+                        </td>
+                    </tr>
+                </table>
+                <div style="page-break-after:always;" />
+
+
+                <h2>RH</h2>
+                <table style="border:1px solid black; width:100%">
+                    <tr>
+                        <td class="td1 text-center" style="padding:1mm">
+                            <img t-if="o.photo_rh"
+                                t-att-src="image_data_uri(o.photo_rh)"
+                                class="imgclass"
+                                style="max-width:100mm"
+                            />
+                        </td>
+                        <td class="td1 text-left">
+                            <div t-field="o.nouveaux_arrivants"/>
+                        </td>
+                    </tr>
+                </table>
+                <br />
+
+                <h2>Vie de Sintermat</h2>
+                <table style="border:1px solid black; width:100%">
+                    <tr>
+                        <td class="td1 text-left">
+                            <div t-field="o.vie_sintermat_gauche"/>
+                        </td>
+                        <td class="td1 text-left">
+                            <div t-field="o.vie_sintermat_droite"/>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </t>
+    </template>
+
+    <template id="is_fiche_reporting_report">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-set="lang" t-value="fr_FR"/>
+                <t t-call="is_sintermat.is_fiche_reporting_report_document" t-lang="lang"/>
+            </t>
+        </t>
+    </template>
+
+
+
+
+    <record id="is_fiche_reporting_paperformat" model="report.paperformat">
+        <field name="name">A4 Fiche reporting</field>
+        <field name="default" eval="True" />
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Landscape</field>
+        <field name="margin_top">30</field>
+        <field name="margin_bottom">15</field>
+        <field name="margin_left">7</field>
+        <field name="margin_right">7</field>
+        <field name="header_line" eval="False" />
+        <field name="header_spacing">25</field>
+        <field name="dpi">90</field>
+    </record>
+
+
+
+
+    <report
+        id="is_fiche_reporting_report_report"
+        model="is.fiche.reporting"
+        string="Fiche reporting"
+        report_type="qweb-pdf"
+        name="is_sintermat.is_fiche_reporting_report"
+        file="is_sintermat.is_fiche_reporting_report"
+        attachment="'Fiche reporting.pdf'"
+    />
+    <record id="is_fiche_reporting_report_report" model="ir.actions.report">
+        <field name="paperformat_id" ref="is_sintermat.is_fiche_reporting_paperformat"/>
+    </record>
+
+
+
+</odoo>

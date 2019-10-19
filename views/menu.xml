@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
     <data>
+
+
+        <menuitem
+            name="Fiche reporting"
+            id="is_fiche_reporting_menu"
+            parent="sale.sale_menu_root"
+            sequence="89"
+            action="is_fiche_reporting_action"
+        />
+
+
         <menuitem   
             name="Phases"  
             id="is_phase_main_menu"
