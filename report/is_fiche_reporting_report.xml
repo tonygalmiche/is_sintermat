@@ -14,7 +14,7 @@
                 <table style="width:100%">
                     <tr>
                         <td style="width:40mm"><img t-att-src="'/is_sintermat/static/src/img/fiche-reporting-logo.png'" style="max-height: 30mm;" alt="Logo"/></td>
-                        <td style="vertical-align:bottom"><h1>Fiche reporting Comité stratégique du <span t-field="o.date_debut"/></h1></td>
+                        <td style="vertical-align:bottom"><h1>Fiche reporting Comité stratégique du <t t-esc="time.strftime('%d/%m/%Y')"/></h1></td>
                     </tr>
                 </table>
 
@@ -67,13 +67,13 @@
                     <thead>
                         <tr>
                             <th class="th1 text-center">Client</th>
-                            <th class="th1 text-center">Commande</th>
+                            <th class="th1 text-center">N° de proposition</th>
                             <th class="th1 text-center">Phase</th>
                             <th class="th1 text-center">%</th>
                             <th class="th1 text-center">CA</th>
                             <th class="th1 text-center">CA pondéré</th>
-                            <th class="th1 text-center">Date décisionnelle</th>
-                            <th class="th1 text-center">Date confirmation</th>
+                            <th class="th1 text-center">Date de décision</th>
+                            <th class="th1 text-center">Date enregistrement commande</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -85,8 +85,8 @@
                                 <td class="td1 text-center"><span t-field="c.is_phase_id.probabilite"/></td>
                                 <td class="td1 text-right"><span t-esc='"{:,.2f}".format(c.amount_untaxed).replace(","," ").replace(".",",")'/> €</td>
                                 <td class="td1 text-right"><span t-esc='"{:,.2f}".format(c.is_ca_pondere).replace(","," ").replace(".",",")'/> €</td>
-                                <td class="td1 text-center"><span t-field="c.is_date_decisionnelle" t-field-options='{"format": "dd/MM/yyyy"}'/></td>
-                                <td class="td1 text-center"><t t-if="c.confirmation_date"><t t-esc="c.confirmation_date.strftime('%d/%m/%Y') "/></t></td>
+                                <td class="td1 text-center"><t t-if="c.is_date_decisionnelle"><t t-esc="c.is_date_decisionnelle.strftime('%d/%m/%Y')"/></t></td>
+                                <td class="td1 text-center"><t t-esc="c.create_date.strftime('%d/%m/%Y') "/></td>
                             </tr>
                         </t>
                     </tbody>

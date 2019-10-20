@@ -20,6 +20,7 @@ class IsFicheReportingGraphique(models.Model):
     mois        = fields.Char('Mois')
     prevision   = fields.Float(u'Prévision', digits=(12,2))
     realise     = fields.Float(u'Réalisé'  , digits=(12,2))
+    cumul       = fields.Float(u'Cumul'    , digits=(12,2))
 
 
 class IsFicheReporting(models.Model):
@@ -52,7 +53,8 @@ class IsFicheReporting(models.Model):
 
     @api.multi
     def get_commandes(self):
-        commandes = self.env['sale.order'].search([],limit=10,order='id desc')
+        filtre=[('state','not in',['cancel'])]
+        commandes = self.env['sale.order'].search(filtre,limit=10,order='id desc')
         return commandes
 
 
@@ -65,7 +67,8 @@ class IsFicheReporting(models.Model):
                 FROM sale_order
                 WHERE 
                     confirmation_date>='"""+str(date_debut)+"""' and
-                    confirmation_date<'"""+str(date_fin)+"""'
+                    confirmation_date<'"""+str(date_fin)+"""' and
+                    state not in ('cancel')
             """
             cr.execute(SQL)
             rows = cr.fetchall()
@@ -146,14 +149,17 @@ class IsFicheReporting(models.Model):
                     delta = (obj.objectif_fin-obj.objectif_debut)/(nb_mois-1)
                     mois = debut_mois
                     fin_mois = debut_mois
+                    cumul = 0
                     while mois < date_fin:
                         fin_mois = fin_mois + relativedelta(months=+1)
-                        realise = self.get_realise(debut_mois,fin_mois) or 0
+                        realise = self.get_realise(mois,fin_mois) or 0
+                        cumul += realise
                         vals={
                             'fiche_id'  : obj.id,
                             'mois'      : mois.strftime('%m/%y'),
                             'prevision' : prevision,
-                            'realise'   : realise/1000,
+                            'realise'   : realise/1000.0,
+                            'cumul'     : cumul/1000.0,
                         }
                         self.env['is.fiche.reporting.graphique'].create(vals)
                         prevision = prevision + delta
@@ -164,17 +170,22 @@ class IsFicheReporting(models.Model):
             width = .35 # width of a bar
             prevision = []
             realise   = []
+            cumul     = []
             labels    = []
             for row in obj.donnees_graphique_ids:
                 prevision.append(row.prevision)
                 realise.append(row.realise)
+                cumul.append(row.cumul)
                 labels.append(row.mois)
             m1_t = pd.DataFrame({
              'Prévision' : prevision,
-             'Réalisé' : realise,
+             'Cumul'     : cumul,
+             'Réalisé'   : realise,
             })
-            m1_t[['Réalisé']].plot(kind='bar', width = width, color='red')
             m1_t['Prévision'].plot(color='green')
+            m1_t['Cumul'].plot(kind='bar', width = 2*width, color='green')
+            m1_t['Réalisé'].plot(kind='bar', width = width, color='red')
+
 
             ax = plt.gca()
             plt.xlim([-width, len(m1_t['Réalisé'])-width])

@@ -38,6 +38,7 @@
                                 <field name="mois" />
                                 <field name="prevision" sum="Total"/>
                                 <field name="realise"   sum="Total"/>
+                                <field name="cumul"     sum="Total"/>
                             </tree>
                         </field>
                     </group>
@@ -81,7 +82,7 @@
         <field name="state">code</field>
         <field name="code">model.envoyer_mail_cron()</field>
         <field name='interval_number'>1</field>
-        <field name='interval_type'>weeks</field>
+        <field name='interval_type'>months</field>
         <field name="numbercall">-1</field>
     </record>
 
