@@ -3,13 +3,13 @@ from odoo import api, fields, models, _
 from odoo.exceptions import Warning
 from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
-
+import base64
 import matplotlib
 matplotlib.use('Agg')
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-import base64
+
 
 
 class IsFicheReportingGraphique(models.Model):
@@ -91,6 +91,7 @@ class IsFicheReporting(models.Model):
     @api.multi
     def envoyer_mail_cron(self):
         fiche = self.env['is.fiche.reporting'].search([])[0]
+        fiche.actualiser()
         fiche.envoyer_mail()
 
 
@@ -130,9 +131,8 @@ class IsFicheReporting(models.Model):
 
 
     @api.multi
-    def actualiser(self, vals):
+    def actualiser(self):
         for obj in self:
-
             date_debut = obj.date_debut
             date_fin   = obj.date_fin
             if date_fin>date_debut:
@@ -185,8 +185,6 @@ class IsFicheReporting(models.Model):
             m1_t['Prévision'].plot(color='green')
             m1_t['Cumul'].plot(kind='bar', width = 2*width, color='green')
             m1_t['Réalisé'].plot(kind='bar', width = width, color='red')
-
-
             ax = plt.gca()
             plt.xlim([-width, len(m1_t['Réalisé'])-width])
             ax.set_xticklabels(labels)
@@ -195,6 +193,7 @@ class IsFicheReporting(models.Model):
             #plt.title("Indicateur")
             plt.legend()
             fig = plt.gcf()
+            plt.close()
             fig.set_size_inches(18.5, 10.5)
             filename = '/tmp/fiche_reporting.png'
             fig.savefig(filename,dpi=46)
